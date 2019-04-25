@@ -112,5 +112,3 @@ for ((i=2;i<$#;i++));
 
 echo "Setup complete:";
 lsNodes ${keypath} ${args_arr[1]}
-
-# todo: check swarm connectivity
