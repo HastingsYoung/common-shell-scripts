@@ -2,6 +2,7 @@ version: '3.5'
 
 # The stack described below requires a zookeeper cluster setup, the hostname of which defined as zoo1/zoo2/zoo3
 # The default overlay network for zookeeper communication is zk_network
+# The default bridge network for user accessing outside of the cluster mesh is bridge
 services:
   kafka1:
     image: confluentinc/cp-kafka:5.2.1
@@ -17,6 +18,9 @@ services:
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
     volumes:
       - ./kafka-multiple/kafka1/data:/var/lib/kafka/data
+    networks:
+      - zk_network
+      - bridge
 
   kafka2:
     image: confluentinc/cp-kafka:5.2.1
@@ -32,6 +36,9 @@ services:
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
     volumes:
       - ./kafka-multiple/kafka2/data:/var/lib/kafka/data
+    networks:
+      - zk_network
+      - bridge
 
   kafka3:
     image: confluentinc/cp-kafka:5.2.1
@@ -47,7 +54,18 @@ services:
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
     volumes:
       - ./kafka-multiple/kafka3/data:/var/lib/kafka/data
+    networks:
+      - zk_network
+      - bridge
+# Please note that this network is only accessible from inside the overlay network, which means that the connection outside of 
+# the container servie mesh could not reach to the port even when it's been mapped.
 networks:
+  zk_network:
+    name: zk_network
+    external: true
+  bridge:
+    name: bridge
+    external: true
   default:
     name: zk_network
     external: true
