@@ -1,5 +1,5 @@
 # Common Shell Scripts
-This repo is created as a first index for developers to quickly iterate through their applications by skipping the setup of most common infrastructures and deployment.
+This repo is created as a first index for developers to quickly iterate through their applications by skipping the setup of most common infrastructures and deployment configurations.
 
 ## TOC
 - [1] [Docker/Docker Swarm](https://github.com/HastingsYoung/common-shell-scripts/tree/master/docker)
